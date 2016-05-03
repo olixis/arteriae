@@ -1,0 +1,16 @@
+{
+  "name": "arteriae",
+  "version": "0.0.1",
+  "description": "node api for searching news and headlines",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "caio fontes <olixis@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "https://github.com/olixis/cheerio",
+    "request": "^2.72.0",
+    "restify": "^4.0.4"
+  }
+}
