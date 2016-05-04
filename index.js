@@ -2,19 +2,28 @@ var querystring = require('querystring');
 var request = require('request');
 var cheerio = require('cheerio');
 var google = require('google');
-
+var MAXRESULTS = 10;
 
 module.exports.feed = function headLinesBySite(theme, word) {
-    retorno = [];
+    var teste = 0;
+    var final = [];
     findAllGoogleURLs(theme, function(links) {
-        for (var i = links.length - 1; i >= 0; i--) {
-            findHeadlines(links[i], word, function(r,url){
-               console.log(url+" - "+r);
+        for (i = links.length - 1; i >= 0; i--) {
+            findHeadlines(links[i], word, function(r, url) {
+                final.push({
+                    url: url,
+                    manchetes: r
+                });
+                //console.log(url+" - "+r);
+                teste++;
+                if (teste === MAXRESULTS - 1) {
+                    console.log(final);
+                    return final;
+                }
             });
         }
     });
 };
-
 
 var findHeadlines = function findHeadlines(url, word, cb) {
     request(url, {
@@ -23,25 +32,24 @@ var findHeadlines = function findHeadlines(url, word, cb) {
         if (!error && response.statusCode == 200) {
             $ = cheerio.load(body);
             texto = [];
-            retorno = [];
+            var retorno = [];
             b = $('body').text().toLowerCase();
             c = b.replace(/\s+/g, ' ');
             texto = c.split("¬");
             for (var i = texto.length - 1; i >= 0; i--) {
                 if (texto[i].search(word) !== -1 && texto[i].length < 100) {
                     //console.log(texto[i]);
-                    retorno.push("+"+texto[i]+"+");
+                    retorno.push("+" + texto[i] + "+");
                 }
             }
             //console.log(retorno);
-            cb(retorno,url);
+            cb(retorno, url);
         } else {
             console.log(error);
+            cb([], url);
         }
     });
 };
-
-
 var test = function() {
     google.resultsPerPage = 11;
     var nextCounter = 0;
@@ -53,11 +61,9 @@ var test = function() {
         }
     });
 };
-
-
 var findAllGoogleURLs = function(theme, cb) {
     request({
-        url: "https://www.google.com/search?hl=pt-BR&q=" + theme + "&start=0&sa=N&num=10&ie=UTF-8&oe=UTF-8&gws_rd=ssl",
+        url: "https://www.google.com/search?hl=pt-BR&q=" + theme + "&start=0&sa=N&num=" + MAXRESULTS + "&ie=UTF-8&oe=UTF-8&gws_rd=ssl",
         method: 'GET'
     }, function(error, response, body) {
         var links = [];
