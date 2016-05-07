@@ -8,7 +8,6 @@ var emitter = require('events'),
 var MAXRESULTS = 10;
 var server = restify.createServer();
 server.use(restify.queryParser());
-
 module.exports.feedServer = function() {
     server.get('/:keyword', function(req, res, next) {
         console.log(req.params);
@@ -23,9 +22,8 @@ module.exports.feedServer = function() {
     });
     server.listen(7171);
 };
-
 var feed = function headLinesBySite(word, l) {
-    if (!Array.isArray(l) && l!== undefined) {
+    if (!Array.isArray(l) && l !== undefined) {
         console.log("por favor passe um array");
         return false;
     }
@@ -53,7 +51,6 @@ var feed = function headLinesBySite(word, l) {
         });
     }
 };
-
 var findHeadlines = function findHeadlines(url, word, cb) {
     request(url, {
         timeout: 1000
@@ -63,16 +60,14 @@ var findHeadlines = function findHeadlines(url, word, cb) {
             texto = [];
             var retorno = [];
             b = $('a').text().toLowerCase();
-            //console.log(b);
             c = b.replace(/\s+/g, ' ');
             texto = c.split("¬");
             for (var i = texto.length - 1; i >= 0; i--) {
-                //if (texto[i].search(word) !== -1 && texto[i].length < 100) {
-                    //console.log(texto[i]);
-                    if(texto[i]!== "" && texto[i] !== " "){
-                    retorno.push("+" + texto[i] + "+");
+                if (texto[i].search(word) !== -1 && texto[i].length < 100) {
+                    if (texto[i] !== "" && texto[i] !== " ") {
+                        retorno.push("+" + texto[i] + "+");
+                    }
                 }
-                //}
             }
             cb(retorno, url);
         } else {
@@ -81,4 +76,3 @@ var findHeadlines = function findHeadlines(url, word, cb) {
         }
     });
 };
-
