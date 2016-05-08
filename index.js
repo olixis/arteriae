@@ -13,6 +13,7 @@ module.exports.feedServer = function() {
         console.log(req.params);
         feed(req.params.keyword);
         eventEmitter.once('retorno', function(retorno) {
+            res.header('Access-Control-Allow-Origin','*');
             res.send(retorno);
             return next();
         });
