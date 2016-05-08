@@ -59,7 +59,7 @@ var findHeadlines = function findHeadlines(url, word, cb) {
             $ = cheerio.load(body);
             texto = [];
             var retorno = [];
-            b = $('a').text().toLowerCase();
+            b = $('body').text().toLowerCase();
             c = b.replace(/\s+/g, ' ');
             texto = c.split("¬");
             for (var i = texto.length - 1; i >= 0; i--) {
