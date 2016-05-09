@@ -1,7 +1,6 @@
 var querystring = require('querystring');
 var request = require('request');
 var cheerio = require('cheerio');
-var google = require('google');
 var restify = require('restify');
 var emitter = require('events'),
     eventEmitter = new emitter.EventEmitter();
@@ -10,10 +9,9 @@ var server = restify.createServer();
 server.use(restify.queryParser());
 module.exports.feedServer = function() {
     server.get('/:keyword', function(req, res, next) {
-        console.log(req.params);
         feed(req.params.keyword);
         eventEmitter.once('retorno', function(retorno) {
-            res.header('Access-Control-Allow-Origin','*');
+            res.header('Access-Control-Allow-Origin', '*');
             res.send(retorno);
             return next();
         });
@@ -31,7 +29,7 @@ var feed = function headLinesBySite(word, l) {
     if (l !== []) {
         links = l;
     }
-    links = ["http://www.globo.com/", "http://atarde.uol.com.br/"];
+    links = ["http://www.globo.com/", "http://atarde.uol.com.br/", "http://www.estadao.com.br/", ];
     var teste = 0;
     var final = [];
     for (i = links.length - 1; i >= 0; i--) {
@@ -41,7 +39,6 @@ var feed = function headLinesBySite(word, l) {
                 keyword: word,
                 manchetes: r
             });
-            //console.log(url+" - "+r);
             teste++;
             console.log((teste / links.length) * 100 + "%");
             if (teste === links.length) {
@@ -63,13 +60,19 @@ var findHeadlines = function findHeadlines(url, word, cb) {
             b = $('body').text().toLowerCase();
             c = b.replace(/\s+/g, ' ');
             texto = c.split("¬");
+            keywords = word.split(" ");
+            texto = Array.from(new Set(texto));
             for (var i = texto.length - 1; i >= 0; i--) {
-                if (texto[i].search(word) !== -1 && texto[i].length < 100) {
-                    if (texto[i] !== "" && texto[i] !== " ") {
-                        retorno.push("+" + texto[i] + "+");
+                for (var o = keywords.length - 1; o >= 0; o--) {
+                    if (texto[i].search(keywords[o]) !== -1 && texto[i].length < 100 && keywords[o].length > 2) {
+                        retorno.push(texto[i]);
                     }
                 }
+                if (texto[i].search(word) !== -1 && texto[i].length < 100) {
+                    retorno.push(texto[i]);
+                }
             }
+            retorno = Array.from(new Set(retorno));
             cb(retorno, url);
         } else {
             console.log(error);
