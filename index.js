@@ -26,13 +26,13 @@ module.exports.feedServer = function() {
 };
 var selectiveFeed = function(jornal) {
     // switch case nome do jornal, default mensagem de erro jornal não definido
-    console.log(jornal);
     switch (jornal) {
         case 'estadao':
             feed.load('http://www.estadao.com.br/rss/ultimas.xml', function(err, rss) {
                 if (err) {
                     console.log(err);
                 } else {
+                    rss.id = 'estadao';
                     eventEmitter.emit('retorno', rss);
                     console.log(rss);
                 }
@@ -43,6 +43,7 @@ var selectiveFeed = function(jornal) {
                 if (err) {
                     console.log(err);
                 } else {
+                    rss.id = 'folha';
                     eventEmitter.emit('retorno', rss);
                     console.log(rss);
                 }
@@ -53,6 +54,7 @@ var selectiveFeed = function(jornal) {
                 if (err) {
                     console.log(err);
                 } else {
+                    rss.id = 'g1';
                     eventEmitter.emit('retorno', rss);
                     console.log(rss);
                 }
@@ -63,6 +65,7 @@ var selectiveFeed = function(jornal) {
                 if (err) {
                     console.log(err);
                 } else {
+                    rss.id = 'atarde';
                     eventEmitter.emit('retorno', rss);
                     console.log(rss);
                 }
