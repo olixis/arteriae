@@ -1,4 +1,4 @@
-var querystring = require('querystring');
+var feed = require('rss-to-json');
 var request = require('request');
 var cheerio = require('cheerio');
 var restify = require('restify');
@@ -8,9 +8,12 @@ var MAXRESULTS = 10;
 var server = restify.createServer();
 server.use(restify.queryParser());
 module.exports.feedServer = function() {
-    server.get('/:keyword', function(req, res, next) {
-        feed(req.params.keyword);
+    server.get('/', function(req, res, next) {
+        //console.log(req.connection.remoteAddress);
+        // console.log(req.params.jornal);
+        selectiveFeed(req.params.jornal);
         eventEmitter.once('retorno', function(retorno) {
+            console.log('entrou');
             res.header('Access-Control-Allow-Origin', '*');
             res.send(retorno);
             return next();
@@ -21,35 +24,55 @@ module.exports.feedServer = function() {
     });
     server.listen(7171);
 };
-var feed = function headLinesBySite(word, l) {
-    if (!Array.isArray(l) && l !== undefined) {
-        console.log("por favor passe um array");
-        return false;
-    }
-    if (l !== []) {
-        links = l;
-    }
-    links = ["http://www.globo.com/", "http://atarde.uol.com.br/", "http://www.estadao.com.br/", ];
-    var teste = 0;
-    var final = [];
-    for (i = links.length - 1; i >= 0; i--) {
-        findHeadlines(links[i], word.toLowerCase(), function(r, url) {
-            final.push({
-                url: url,
-                keyword: word,
-                manchetes: r
+var selectiveFeed = function(jornal) {
+    // switch case nome do jornal, default mensagem de erro jornal não definido
+    console.log(jornal);
+    switch (jornal) {
+        case 'estadao':
+            feed.load('http://www.estadao.com.br/rss/ultimas.xml', function(err, rss) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    eventEmitter.emit('retorno', rss);
+                    console.log(rss);
+                }
             });
-            teste++;
-            console.log((teste / links.length) * 100 + "%");
-            if (teste === links.length) {
-                console.log("Concluído!");
-                console.log(final);
-                eventEmitter.emit('retorno', final);
-            }
-        });
+            break;
+        case 'folha':
+            feed.load('http://feeds.folha.uol.com.br/emcimadahora/rss091.xml', function(err, rss) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    eventEmitter.emit('retorno', rss);
+                    console.log(rss);
+                }
+            });
+            break;
+                case 'g1':
+            feed.load('http://g1.globo.com/dynamo/brasil/rss2.xml', function(err, rss) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    eventEmitter.emit('retorno', rss);
+                    console.log(rss);
+                }
+            });
+            break;
+        case 'atarde':
+            feed.load('http://atarde.uol.com.br/arquivos/rss/brasil.xml', function(err, rss) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    eventEmitter.emit('retorno', rss);
+                    console.log(rss);
+                }
+            });
+            break;
+        default:
+            throw new Error("Especifique um jornal que o sistema aceite");
     }
 };
-var findHeadlines = function findHeadlines(url, word, cb) {
+var findHeadlines = function(url, word, cb) {
     request(url, {
         timeout: 1000
     }, function(error, response, body) {

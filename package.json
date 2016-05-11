@@ -1,6 +1,6 @@
 {
   "name": "arteriae",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "node api for searching news and headlines",
   "main": "index.js",
   "scripts": {
@@ -10,9 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "cheerio": "https://github.com/olixis/cheerio",
-    "google": "^2.0.0",
-    "querystring": "^0.2.0",
     "request": "^2.72.0",
-    "restify": "^4.0.4"
+    "restify": "^4.0.4",
+    "rss-to-json": "^1.0.2"
   }
 }
