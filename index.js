@@ -29,7 +29,8 @@ var selectiveFeed = function(jornal, categoria) {
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://www.estadao.com.br/rss/ultimas.xml', function(err, rss) {
                     rss.id = jornal;
-                    rss.categoria = categoria;
+                    rss.categoria = 'brasil';
+                    rss.categorias = ['brasil','esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -41,6 +42,7 @@ var selectiveFeed = function(jornal, categoria) {
                 feed.load('http://www.estadao.com.br/rss/esportes.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.categoria = categoria;
+                    rss.categorias = ['brasil','esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -54,7 +56,8 @@ var selectiveFeed = function(jornal, categoria) {
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://feeds.folha.uol.com.br/emcimadahora/rss091.xml', function(err, rss) {
                     rss.id = jornal;
-                    rss.categoria = categoria;
+                    rss.categoria = 'brasil';
+                    rss.categorias = ['brasil','esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -66,6 +69,7 @@ var selectiveFeed = function(jornal, categoria) {
                 feed.load('http://feeds.folha.uol.com.br/folha/esporte/rss091.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.categoria = categoria;
+                    rss.categorias = ['brasil','esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -79,7 +83,8 @@ var selectiveFeed = function(jornal, categoria) {
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://g1.globo.com/dynamo/brasil/rss2.xml', function(err, rss) {
                     rss.id = jornal;
-                    rss.categoria = categoria;
+                    rss.categoria = 'brasil';
+                    rss.categorias = ['brasil','esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -91,6 +96,7 @@ var selectiveFeed = function(jornal, categoria) {
                 feed.load('http://globoesporte.globo.com/servico/semantica/editorias/plantao/feed.rss', function(err, rss) {
                     rss.id = jornal;
                     rss.categoria = categoria;
+                    rss.categorias = ['brasil','esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -104,7 +110,8 @@ var selectiveFeed = function(jornal, categoria) {
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://rss.home.uol.com.br/index.xml', function(err, rss) {
                     rss.id = jornal;
-                    rss.categoria = categoria;
+                    rss.categoria = 'brasil';
+                    rss.categorias = ['brasil','esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -116,6 +123,7 @@ var selectiveFeed = function(jornal, categoria) {
                 feed.load('http://esporte.uol.com.br/ultimas/index.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.categoria = categoria;
+                    rss.categorias = ['brasil','esportes'];
                     if (err) {
                         console.log(err);
                     } else {
