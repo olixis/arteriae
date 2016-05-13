@@ -9,9 +9,7 @@ var server = restify.createServer();
 server.use(restify.queryParser());
 module.exports.feedServer = function() {
     server.get('/', function(req, res, next) {
-        //console.log(req.connection.remoteAddress);
-        // console.log(req.params.jornal);
-        selectiveFeed(req.params.jornal);
+        selectiveFeed(req.params.jornal, req.params.categoria);
         eventEmitter.once('retorno', function(retorno) {
             console.log('entrou');
             res.header('Access-Control-Allow-Origin', '*');
@@ -24,52 +22,108 @@ module.exports.feedServer = function() {
     });
     server.listen(7171);
 };
-var selectiveFeed = function(jornal) {
+var selectiveFeed = function(jornal, categoria) {
     // switch case nome do jornal, default mensagem de erro jornal não definido
     switch (jornal) {
         case 'estadao':
-            feed.load('http://www.estadao.com.br/rss/ultimas.xml', function(err, rss) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    rss.id = 'estadao';
-                    eventEmitter.emit('retorno', rss);
-                    console.log(rss);
-                }
-            });
+            if (!categoria || categoria == 'brasil') {
+                feed.load('http://www.estadao.com.br/rss/ultimas.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = categoria;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            } else if (categoria == 'esportes') {
+                feed.load('http://www.estadao.com.br/rss/esportes.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = categoria;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            }
             break;
         case 'folha':
-            feed.load('http://feeds.folha.uol.com.br/emcimadahora/rss091.xml', function(err, rss) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    rss.id = 'folha';
-                    eventEmitter.emit('retorno', rss);
-                    console.log(rss);
-                }
-            });
+            if (!categoria || categoria == 'brasil') {
+                feed.load('http://feeds.folha.uol.com.br/emcimadahora/rss091.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = categoria;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            } else if (categoria == 'esportes') {
+                feed.load('http://feeds.folha.uol.com.br/folha/esporte/rss091.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = categoria;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            }
             break;
-                case 'g1':
-            feed.load('http://g1.globo.com/dynamo/brasil/rss2.xml', function(err, rss) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    rss.id = 'g1';
-                    eventEmitter.emit('retorno', rss);
-                    console.log(rss);
-                }
-            });
+        case 'g1':
+            if (!categoria || categoria == 'brasil') {
+                feed.load('http://g1.globo.com/dynamo/brasil/rss2.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = categoria;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            } else if (categoria == 'esportes') {
+                feed.load('http://globoesporte.globo.com/servico/semantica/editorias/plantao/feed.rss', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = categoria;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            }
             break;
-        case 'atarde':
-            feed.load('http://atarde.uol.com.br/arquivos/rss/brasil.xml', function(err, rss) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    rss.id = 'atarde';
-                    eventEmitter.emit('retorno', rss);
-                    console.log(rss);
-                }
-            });
+        case 'uol':
+            if (!categoria || categoria == 'brasil') {
+                feed.load('http://rss.home.uol.com.br/index.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = categoria;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            } else if (categoria == 'esportes') {
+                feed.load('http://esporte.uol.com.br/ultimas/index.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = categoria;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            }
             break;
         default:
             throw new Error("Especifique um jornal que o sistema aceite");
