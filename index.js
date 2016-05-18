@@ -30,7 +30,7 @@ var selectiveFeed = function(jornal, categoria) {
                 feed.load('http://www.estadao.com.br/rss/ultimas.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.categoria = 'brasil';
-                    rss.categorias = ['brasil','esportes'];
+                    rss.categorias = ['brasil', 'esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -42,7 +42,7 @@ var selectiveFeed = function(jornal, categoria) {
                 feed.load('http://www.estadao.com.br/rss/esportes.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.categoria = categoria;
-                    rss.categorias = ['brasil','esportes'];
+                    rss.categorias = ['brasil', 'esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -57,7 +57,7 @@ var selectiveFeed = function(jornal, categoria) {
                 feed.load('http://feeds.folha.uol.com.br/emcimadahora/rss091.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.categoria = 'brasil';
-                    rss.categorias = ['brasil','esportes'];
+                    rss.categorias = ['brasil', 'esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -69,7 +69,7 @@ var selectiveFeed = function(jornal, categoria) {
                 feed.load('http://feeds.folha.uol.com.br/folha/esporte/rss091.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.categoria = categoria;
-                    rss.categorias = ['brasil','esportes'];
+                    rss.categorias = ['brasil', 'esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -84,7 +84,7 @@ var selectiveFeed = function(jornal, categoria) {
                 feed.load('http://g1.globo.com/dynamo/brasil/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.categoria = 'brasil';
-                    rss.categorias = ['brasil','esportes'];
+                    rss.categorias = ['brasil', 'esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -96,7 +96,7 @@ var selectiveFeed = function(jornal, categoria) {
                 feed.load('http://globoesporte.globo.com/servico/semantica/editorias/plantao/feed.rss', function(err, rss) {
                     rss.id = jornal;
                     rss.categoria = categoria;
-                    rss.categorias = ['brasil','esportes'];
+                    rss.categorias = ['brasil', 'esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -111,7 +111,7 @@ var selectiveFeed = function(jornal, categoria) {
                 feed.load('http://rss.home.uol.com.br/index.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.categoria = 'brasil';
-                    rss.categorias = ['brasil','esportes'];
+                    rss.categorias = ['brasil', 'esportes'];
                     if (err) {
                         console.log(err);
                     } else {
@@ -123,7 +123,88 @@ var selectiveFeed = function(jornal, categoria) {
                 feed.load('http://esporte.uol.com.br/ultimas/index.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.categoria = categoria;
-                    rss.categorias = ['brasil','esportes'];
+                    rss.categorias = ['brasil', 'esportes'];
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            }
+            break;
+        case 'elpais':
+            if (!categoria || categoria == 'brasil') {
+                feed.load('http://brasil.elpais.com/rss/brasil/portada.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = 'brasil';
+                    rss.categorias = ['brasil', 'esportes'];
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            } else if (categoria == 'esportes') {
+                feed.load('http://brasil.elpais.com/seccion/rss/deportes/', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = categoria;
+                    rss.categorias = ['brasil', 'esportes'];
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            }
+            break;
+        case 'exame':
+            if (!categoria || categoria == 'brasil') {
+                feed.load('http://feeds.feedburner.com/EXAME-Noticias?format=xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = 'brasil';
+                    rss.categorias = ['brasil', 'economia'];
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            } else if (categoria == 'economia') {
+                feed.load('http://feeds.feedburner.com/Exame-Economia?format=xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = categoria;
+                    rss.categorias = ['brasil', 'economia'];
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            }
+            break;
+        case 'ig':
+            if (!categoria || categoria == 'brasil') {
+                feed.load('http://ultimosegundo.ig.com.br/brasil/rss.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = 'brasil';
+                    rss.categorias = ['brasil', 'esportes'];
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        console.log(rss);
+                    }
+                });
+            } else if (categoria == 'esportes') {
+                feed.load('http://esporte.ig.com.br/futebol/rss.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.categoria = categoria;
+                    rss.categorias = ['brasil', 'esportes'];
                     if (err) {
                         console.log(err);
                     } else {
