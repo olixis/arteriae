@@ -5,6 +5,7 @@ var restify = require('restify');
 var emitter = require('events'),
     eventEmitter = new emitter.EventEmitter();
 var MAXRESULTS = 10;
+var IDS = ['estadao', 'folha', 'g1', 'uol', 'elpais', 'exame', 'ig'];
 var server = restify.createServer();
 server.use(restify.queryParser());
 module.exports.feedServer = function() {
@@ -29,6 +30,7 @@ var selectiveFeed = function(jornal, categoria) {
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://www.estadao.com.br/rss/ultimas.xml', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = 'brasil';
                     rss.categorias = ['brasil', 'esportes'];
                     if (err) {
@@ -41,6 +43,7 @@ var selectiveFeed = function(jornal, categoria) {
             } else if (categoria == 'esportes') {
                 feed.load('http://www.estadao.com.br/rss/esportes.xml', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = categoria;
                     rss.categorias = ['brasil', 'esportes'];
                     if (err) {
@@ -56,6 +59,7 @@ var selectiveFeed = function(jornal, categoria) {
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://feeds.folha.uol.com.br/emcimadahora/rss091.xml', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = 'brasil';
                     rss.categorias = ['brasil', 'esportes'];
                     if (err) {
@@ -68,6 +72,7 @@ var selectiveFeed = function(jornal, categoria) {
             } else if (categoria == 'esportes') {
                 feed.load('http://feeds.folha.uol.com.br/folha/esporte/rss091.xml', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = categoria;
                     rss.categorias = ['brasil', 'esportes'];
                     if (err) {
@@ -83,6 +88,7 @@ var selectiveFeed = function(jornal, categoria) {
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://g1.globo.com/dynamo/brasil/rss2.xml', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = 'brasil';
                     rss.categorias = ['brasil', 'esportes'];
                     if (err) {
@@ -95,6 +101,7 @@ var selectiveFeed = function(jornal, categoria) {
             } else if (categoria == 'esportes') {
                 feed.load('http://globoesporte.globo.com/servico/semantica/editorias/plantao/feed.rss', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = categoria;
                     rss.categorias = ['brasil', 'esportes'];
                     if (err) {
@@ -110,6 +117,7 @@ var selectiveFeed = function(jornal, categoria) {
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://rss.home.uol.com.br/index.xml', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = 'brasil';
                     rss.categorias = ['brasil', 'esportes'];
                     if (err) {
@@ -122,6 +130,7 @@ var selectiveFeed = function(jornal, categoria) {
             } else if (categoria == 'esportes') {
                 feed.load('http://esporte.uol.com.br/ultimas/index.xml', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = categoria;
                     rss.categorias = ['brasil', 'esportes'];
                     if (err) {
@@ -137,6 +146,7 @@ var selectiveFeed = function(jornal, categoria) {
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://brasil.elpais.com/rss/brasil/portada.xml', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = 'brasil';
                     rss.categorias = ['brasil', 'esportes'];
                     if (err) {
@@ -149,6 +159,7 @@ var selectiveFeed = function(jornal, categoria) {
             } else if (categoria == 'esportes') {
                 feed.load('http://brasil.elpais.com/seccion/rss/deportes/', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = categoria;
                     rss.categorias = ['brasil', 'esportes'];
                     if (err) {
@@ -164,6 +175,7 @@ var selectiveFeed = function(jornal, categoria) {
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://feeds.feedburner.com/EXAME-Noticias?format=xml', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = 'brasil';
                     rss.categorias = ['brasil', 'economia'];
                     if (err) {
@@ -176,6 +188,7 @@ var selectiveFeed = function(jornal, categoria) {
             } else if (categoria == 'economia') {
                 feed.load('http://feeds.feedburner.com/Exame-Economia?format=xml', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = categoria;
                     rss.categorias = ['brasil', 'economia'];
                     if (err) {
@@ -191,6 +204,7 @@ var selectiveFeed = function(jornal, categoria) {
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://ultimosegundo.ig.com.br/brasil/rss.xml', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = 'brasil';
                     rss.categorias = ['brasil', 'esportes'];
                     if (err) {
@@ -203,6 +217,7 @@ var selectiveFeed = function(jornal, categoria) {
             } else if (categoria == 'esportes') {
                 feed.load('http://esporte.ig.com.br/futebol/rss.xml', function(err, rss) {
                     rss.id = jornal;
+                    rss.ids = IDS;
                     rss.categoria = categoria;
                     rss.categorias = ['brasil', 'esportes'];
                     if (err) {
