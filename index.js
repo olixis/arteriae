@@ -8,20 +8,25 @@ var MAXRESULTS = 10;
 var IDS = ['estadao', 'g1', 'uol', 'elpais', 'exame', 'ig'];
 var server = restify.createServer();
 server.use(restify.queryParser());
-server.use(function (req, res, next) {
+server.use(function(req, res, next) {
     req.connection.setTimeout(1 * 1000);
-    res.connection.setTimeout(1 * 1000); 
+    res.connection.setTimeout(1 * 1000);
     next();
 });
 module.exports.feedServer = function() {
     server.get('/', function(req, res, next) {
-        console.log(req.connection.remoteAddress);
+        console.log(req.connection.remoteAddress + " " +req.params.jornal +" " + req.params.categoria);
         selectiveFeed(req.params.jornal, req.params.categoria);
         eventEmitter.once('retorno', function(retorno) {
             res.header('Access-Control-Allow-Origin', '*');
             res.send(retorno);
             return next();
         });
+    });
+    server.get('/ids', function(req, res, next) {
+        console.log(req.connection.remoteAddress+" ids");
+            res.send(IDS);
+            return next();
     });
     server.on("listening", function() {
         console.log("server running!");
@@ -71,7 +76,7 @@ var selectiveFeed = function(jornal, categoria) {
                         console.log(err);
                     } else {
                         eventEmitter.emit('retorno', rss);
-                      //console.log(rss);
+                        //console.log(rss);
                     }
                 });
             } else if (categoria == 'esportes') {
@@ -84,7 +89,7 @@ var selectiveFeed = function(jornal, categoria) {
                         console.log(err);
                     } else {
                         eventEmitter.emit('retorno', rss);
-                       // console.log(rss);
+                        // console.log(rss);
                     }
                 });
             }
@@ -100,7 +105,7 @@ var selectiveFeed = function(jornal, categoria) {
                         console.log(err);
                     } else {
                         eventEmitter.emit('retorno', rss);
-                       // console.log(rss);
+                        // console.log(rss);
                     }
                 });
             } else if (categoria == 'economia') {
@@ -129,7 +134,7 @@ var selectiveFeed = function(jornal, categoria) {
                         console.log(err);
                     } else {
                         eventEmitter.emit('retorno', rss);
-                       // console.log(rss);
+                        // console.log(rss);
                     }
                 });
             } else if (categoria == 'esportes') {
@@ -142,7 +147,7 @@ var selectiveFeed = function(jornal, categoria) {
                         console.log(err);
                     } else {
                         eventEmitter.emit('retorno', rss);
-                       // console.log(rss);
+                        // console.log(rss);
                     }
                 });
             }
@@ -158,7 +163,7 @@ var selectiveFeed = function(jornal, categoria) {
                         console.log(err);
                     } else {
                         eventEmitter.emit('retorno', rss);
-                       // console.log(rss);
+                        // console.log(rss);
                     }
                 });
             } else if (categoria == 'economia') {
@@ -171,7 +176,7 @@ var selectiveFeed = function(jornal, categoria) {
                         console.log(err);
                     } else {
                         eventEmitter.emit('retorno', rss);
-                       // console.log(rss);
+                        // console.log(rss);
                     }
                 });
             }
@@ -187,7 +192,7 @@ var selectiveFeed = function(jornal, categoria) {
                         console.log(err);
                     } else {
                         eventEmitter.emit('retorno', rss);
-                       // console.log(rss);
+                        // console.log(rss);
                     }
                 });
             } else if (categoria == 'esportes') {
@@ -200,7 +205,7 @@ var selectiveFeed = function(jornal, categoria) {
                         console.log(err);
                     } else {
                         eventEmitter.emit('retorno', rss);
-                       // console.log(rss);
+                        // console.log(rss);
                     }
                 });
             }
