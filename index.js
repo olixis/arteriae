@@ -91,7 +91,7 @@ var selectiveFeed = function(jornal, categoria) {
             break;
         case 'uol':
             if (!categoria || categoria == 'brasil') {
-                feed.load('http://rss.home.uol.com.br/index.xml', function(err, rss) {
+                feed.load('http://rss.uol.com.br/feed/noticias.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = 'brasil';
