@@ -20,6 +20,8 @@ module.exports.feedServer = function() {
         eventEmitter.once('retorno', function(retorno) {
             res.header('Access-Control-Allow-Origin', '*');
             res.send(retorno);
+            eventEmitter.removeListener('retorno',function(){});
+            console.log(eventEmitter.listenerCount('retorno'));
             return next();
         });
     });
