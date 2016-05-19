@@ -8,6 +8,11 @@ var MAXRESULTS = 10;
 var IDS = ['estadao', 'g1', 'uol', 'elpais', 'exame', 'ig'];
 var server = restify.createServer();
 server.use(restify.queryParser());
+server.use(function (req, res, next) {
+    req.connection.setTimeout(1 * 1000);
+    res.connection.setTimeout(1 * 1000); 
+    next();
+});
 module.exports.feedServer = function() {
     server.get('/', function(req, res, next) {
         console.log(req.connection.remoteAddress);
@@ -66,7 +71,7 @@ var selectiveFeed = function(jornal, categoria) {
                         console.log(err);
                     } else {
                         eventEmitter.emit('retorno', rss);
-                       // console.log(rss);
+                      //console.log(rss);
                     }
                 });
             } else if (categoria == 'esportes') {
