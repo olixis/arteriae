@@ -9,8 +9,8 @@ var IDS = ['estadao', 'g1', 'uol', 'elpais', 'exame', 'ig'];
 var server = restify.createServer();
 server.use(restify.queryParser());
 server.use(function(req, res, next) {
-    req.connection.setTimeout(1 * 1000);
-    res.connection.setTimeout(1 * 1000);
+    req.connection.setTimeout(1 * 3000);
+    res.connection.setTimeout(1 * 3000);
     next();
 });
 module.exports.feedServer = function() {
