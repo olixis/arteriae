@@ -15,19 +15,19 @@ server.use(function(req, res, next) {
 });
 module.exports.feedServer = function() {
     server.get('/', function(req, res, next) {
-        console.log(req.connection.remoteAddress + " " +req.params.jornal +" " + req.params.categoria);
+        console.log(req.connection.remoteAddress + " " + req.params.jornal + " " + req.params.categoria);
         selectiveFeed(req.params.jornal, req.params.categoria);
         eventEmitter.once('retorno', function(retorno) {
             res.header('Access-Control-Allow-Origin', '*');
             res.send(retorno);
-            eventEmitter.removeListener('retorno',function(){});
+            eventEmitter.removeListener('retorno', function() {});
             return next();
         });
     });
     server.get('/ids', function(req, res, next) {
-        console.log(req.connection.remoteAddress+" ids");
-            res.send(IDS);
-            return next();
+        console.log(req.connection.remoteAddress + " ids");
+        res.send(IDS);
+        return next();
     });
     server.on("listening", function() {
         console.log("server running!");
@@ -38,12 +38,13 @@ var selectiveFeed = function(jornal, categoria) {
     // switch case nome do jornal, default mensagem de erro jornal não definido
     switch (jornal) {
         case 'estadao':
+            var categoriasEstadao = ['brasil', 'esportes', 'politica', 'arteelazer', 'cidades', 'saude', 'educacao', 'economia', 'ciencia','internacional'];
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://www.estadao.com.br/rss/ultimas.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = 'brasil';
-                    rss.categorias = ['brasil', 'esportes'];
+                    rss.categorias = categoriasEstadao;
                     if (err) {
                         console.log(err);
                     } else {
@@ -56,7 +57,111 @@ var selectiveFeed = function(jornal, categoria) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = categoria;
-                    rss.categorias = ['brasil', 'esportes'];
+                    rss.categorias = categoriasEstadao;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        //console.log(rss);
+                    }
+                });
+            } else if (categoria == 'politica') {
+                feed.load('http://www.estadao.com.br/rss/politica.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasEstadao;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        //console.log(rss);
+                    }
+                });
+            } else if (categoria == 'arteelazer') {
+                feed.load('http://www.estadao.com.br/rss/arteelazer.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasEstadao;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        //console.log(rss);
+                    }
+                });
+            } else if (categoria == 'cidades') {
+                feed.load('http://www.estadao.com.br/rss/cidades.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasEstadao;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        //console.log(rss);
+                    }
+                });
+            } else if (categoria == 'saude') {
+                feed.load('http://www.estadao.com.br/rss/saude.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasEstadao;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        //console.log(rss);
+                    }
+                });
+            } else if (categoria == 'educacao') {
+                feed.load('http://www.estadao.com.br/rss/educacao.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasEstadao;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        //console.log(rss);
+                    }
+                });
+            } else if (categoria == 'economia') {
+                feed.load('http://www.estadao.com.br/rss/economia.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasEstadao;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        //console.log(rss);
+                    }
+                });
+            } else if (categoria == 'ciencia') {
+                feed.load('http://www.estadao.com.br/rss/ciencia.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasEstadao;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        //console.log(rss);
+                    }
+                });
+            } else if (categoria == 'internacional') {
+                feed.load('http://www.estadao.com.br/rss/internacional.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasEstadao;
                     if (err) {
                         console.log(err);
                     } else {
@@ -67,12 +172,13 @@ var selectiveFeed = function(jornal, categoria) {
             }
             break;
         case 'g1':
+            var categoriasG1 = ['brasil', 'esportes'];
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://g1.globo.com/dynamo/brasil/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = 'brasil';
-                    rss.categorias = ['brasil', 'esportes'];
+                    rss.categorias = categoriasG1;
                     if (err) {
                         console.log(err);
                     } else {
@@ -85,7 +191,7 @@ var selectiveFeed = function(jornal, categoria) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = categoria;
-                    rss.categorias = ['brasil', 'esportes'];
+                    rss.categorias = categoriasG1;
                     if (err) {
                         console.log(err);
                     } else {
@@ -96,12 +202,13 @@ var selectiveFeed = function(jornal, categoria) {
             }
             break;
         case 'uol':
+            var categoriasUol = ['brasil', 'economia'];
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://rss.uol.com.br/feed/noticias.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = 'brasil';
-                    rss.categorias = ['brasil', 'economia'];
+                    rss.categorias = categoriasUol;
                     if (err) {
                         console.log(err);
                     } else {
@@ -125,12 +232,13 @@ var selectiveFeed = function(jornal, categoria) {
             }
             break;
         case 'elpais':
+            var categoriasElpais = ['brasil', 'esportes'];
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://brasil.elpais.com/rss/brasil/portada.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = 'brasil';
-                    rss.categorias = ['brasil', 'esportes'];
+                    rss.categorias = categoriasElpais;
                     if (err) {
                         console.log(err);
                     } else {
@@ -143,7 +251,7 @@ var selectiveFeed = function(jornal, categoria) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = categoria;
-                    rss.categorias = ['brasil', 'esportes'];
+                    rss.categorias = categoriasElpais;
                     if (err) {
                         console.log(err);
                     } else {
@@ -154,12 +262,13 @@ var selectiveFeed = function(jornal, categoria) {
             }
             break;
         case 'exame':
+            var categoriasExame = ['brasil', 'economia'];
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://feeds.feedburner.com/EXAME-Noticias?format=xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = 'brasil';
-                    rss.categorias = ['brasil', 'economia'];
+                    rss.categorias = categoriasExame;
                     if (err) {
                         console.log(err);
                     } else {
@@ -172,7 +281,7 @@ var selectiveFeed = function(jornal, categoria) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = categoria;
-                    rss.categorias = ['brasil', 'economia'];
+                    rss.categorias = categoriasExame;
                     if (err) {
                         console.log(err);
                     } else {
@@ -183,12 +292,13 @@ var selectiveFeed = function(jornal, categoria) {
             }
             break;
         case 'ig':
+            var categoriasIg = ['brasil', 'esportes'];
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://ultimosegundo.ig.com.br/brasil/rss.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = 'brasil';
-                    rss.categorias = ['brasil', 'esportes'];
+                    rss.categorias = categoriasIg;
                     if (err) {
                         console.log(err);
                     } else {
@@ -201,7 +311,7 @@ var selectiveFeed = function(jornal, categoria) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = categoria;
-                    rss.categorias = ['brasil', 'esportes'];
+                    rss.categorias = categoriasIg;
                     if (err) {
                         console.log(err);
                     } else {
