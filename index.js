@@ -133,7 +133,8 @@ var selectiveFeed = function(jornal, categoria) {
             }
             break;
         case 'g1':
-            var categoriasG1 = ['brasil', 'esportes'];
+            var categoriasG1 = ['brasil', 'esportes','política','carros','ciência','emprego','economia','educação',
+            'loterias','mundo','natureza','tecnologia','turismo'];
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://g1.globo.com/dynamo/brasil/rss2.xml', function(err, rss) {
                     rss.id = jornal;
@@ -149,6 +150,162 @@ var selectiveFeed = function(jornal, categoria) {
                 });
             } else if (categoria == 'esportes') {
                 feed.load('http://globoesporte.globo.com/servico/semantica/editorias/plantao/feed.rss', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasG1;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'política') {
+                feed.load('http://g1.globo.com/dynamo/politica/rss2.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasG1;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'carros') {
+                feed.load('http://g1.globo.com/dynamo/carros/rss2.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasG1;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'ciência') {
+                feed.load('http://g1.globo.com/dynamo/ciencia-e-saude/rss2.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasG1;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'emprego') {
+                feed.load('http://g1.globo.com/dynamo/concursos-e-emprego/rss2.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasG1;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'economia') {
+                feed.load('http://g1.globo.com/dynamo/economia/rss2.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasG1;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'educação') {
+                feed.load('http://g1.globo.com/dynamo/educacao/rss2.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasG1;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'loterias') {
+                feed.load('http://g1.globo.com/dynamo/loterias/rss2.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasG1;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'mundo') {
+                feed.load('http://g1.globo.com/dynamo/mundo/rss2.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasG1;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'música') {
+                feed.load('http://g1.globo.com/dynamo/musica/rss2.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasG1;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'natureza') {
+                feed.load('http://g1.globo.com/dynamo/natureza/rss2.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasG1;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'tecnologia') {
+                feed.load('http://g1.globo.com/dynamo/tecnologia/rss2.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasG1;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'turismo') {
+                feed.load('http://g1.globo.com/dynamo/turismo-e-viagem/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = categoria;
