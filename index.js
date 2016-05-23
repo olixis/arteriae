@@ -38,7 +38,7 @@ var selectiveFeed = function(jornal, categoria) {
     // switch case nome do jornal, default mensagem de erro jornal não definido
     switch (jornal) {
         case 'estadao':
-            var categoriasEstadao = ['últimas', 'esportes', 'política', 'saúde', 'educação', 'internacional'];
+            var categoriasEstadao = ['últimas', 'esportes', 'política', 'saúde', 'educação','economia', 'internacional'];
             if (!categoria || categoria == 'últimas') {
                 feed.load('http://www.estadao.com.br/rss/ultimas.xml', function(err, rss) {
                     rss.id = jornal;
@@ -93,6 +93,19 @@ var selectiveFeed = function(jornal, categoria) {
                 });
             } else if (categoria == 'educação') {
                 feed.load('http://www.estadao.com.br/rss/educacao.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasEstadao;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        eventEmitter.emit('retorno', rss);
+                        //console.log(rss);
+                    }
+                });
+            } else if (categoria == 'economia') {
+                feed.load('http://economia.estadao.com.br/rss/economia.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = categoria;

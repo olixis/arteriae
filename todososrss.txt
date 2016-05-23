@@ -5,7 +5,7 @@ http://www.estadao.com.br/rss/arteelazer.xml
 http://www.estadao.com.br/rss/cidades.xml
 http://www.estadao.com.br/rss/saude.xml
 http://www.estadao.com.br/rss/educacao.xml
-http://www.estadao.com.br/rss/economia.xml
+http://economia.estadao.com.br/rss/economia.xml
 http://www.estadao.com.br/rss/nacional.xml
 http://www.estadao.com.br/rss/ciencia.xml
 http://www.estadao.com.br/rss/internacional.xml
