@@ -38,7 +38,7 @@ var selectiveFeed = function(jornal, categoria) {
     // switch case nome do jornal, default mensagem de erro jornal não definido
     switch (jornal) {
         case 'estadao':
-            var categoriasEstadao = ['últimas', 'esportes', 'politica', 'arteelazer', 'cidades', 'saude', 'educacao', 'economia', 'ciencia','internacional'];
+            var categoriasEstadao = ['últimas', 'esportes', 'política', 'saúde', 'educação', 'internacional'];
             if (!categoria || categoria == 'últimas') {
                 feed.load('http://www.estadao.com.br/rss/ultimas.xml', function(err, rss) {
                     rss.id = jornal;
@@ -65,7 +65,7 @@ var selectiveFeed = function(jornal, categoria) {
                         //console.log(rss);
                     }
                 });
-            } else if (categoria == 'politica') {
+            } else if (categoria == 'política') {
                 feed.load('http://www.estadao.com.br/rss/politica.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -78,33 +78,7 @@ var selectiveFeed = function(jornal, categoria) {
                         //console.log(rss);
                     }
                 });
-            } else if (categoria == 'arteelazer') {
-                feed.load('http://www.estadao.com.br/rss/arteelazer.xml', function(err, rss) {
-                    rss.id = jornal;
-                    rss.ids = IDS;
-                    rss.categoria = categoria;
-                    rss.categorias = categoriasEstadao;
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        eventEmitter.emit('retorno', rss);
-                        //console.log(rss);
-                    }
-                });
-            } else if (categoria == 'cidades') {
-                feed.load('http://www.estadao.com.br/rss/cidades.xml', function(err, rss) {
-                    rss.id = jornal;
-                    rss.ids = IDS;
-                    rss.categoria = categoria;
-                    rss.categorias = categoriasEstadao;
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        eventEmitter.emit('retorno', rss);
-                        //console.log(rss);
-                    }
-                });
-            } else if (categoria == 'saude') {
+            } else if (categoria == 'saúde') {
                 feed.load('http://www.estadao.com.br/rss/saude.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -117,34 +91,8 @@ var selectiveFeed = function(jornal, categoria) {
                         //console.log(rss);
                     }
                 });
-            } else if (categoria == 'educacao') {
+            } else if (categoria == 'educação') {
                 feed.load('http://www.estadao.com.br/rss/educacao.xml', function(err, rss) {
-                    rss.id = jornal;
-                    rss.ids = IDS;
-                    rss.categoria = categoria;
-                    rss.categorias = categoriasEstadao;
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        eventEmitter.emit('retorno', rss);
-                        //console.log(rss);
-                    }
-                });
-            } else if (categoria == 'economia') {
-                feed.load('http://www.estadao.com.br/rss/economia.xml', function(err, rss) {
-                    rss.id = jornal;
-                    rss.ids = IDS;
-                    rss.categoria = categoria;
-                    rss.categorias = categoriasEstadao;
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        eventEmitter.emit('retorno', rss);
-                        //console.log(rss);
-                    }
-                });
-            } else if (categoria == 'ciencia') {
-                feed.load('http://www.estadao.com.br/rss/ciencia.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = categoria;
