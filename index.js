@@ -38,12 +38,12 @@ var selectiveFeed = function(jornal, categoria) {
     // switch case nome do jornal, default mensagem de erro jornal não definido
     switch (jornal) {
         case 'estadao':
-            var categoriasEstadao = ['brasil', 'esportes', 'politica', 'arteelazer', 'cidades', 'saude', 'educacao', 'economia', 'ciencia','internacional'];
-            if (!categoria || categoria == 'brasil') {
+            var categoriasEstadao = ['últimas', 'esportes', 'politica', 'arteelazer', 'cidades', 'saude', 'educacao', 'economia', 'ciencia','internacional'];
+            if (!categoria || categoria == 'últimas') {
                 feed.load('http://www.estadao.com.br/rss/ultimas.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
-                    rss.categoria = 'brasil';
+                    rss.categoria = 'últimas';
                     rss.categorias = categoriasEstadao;
                     if (err) {
                         console.log(err);
