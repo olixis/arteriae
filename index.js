@@ -14,6 +14,7 @@ server.use(function(req, res, next) {
 module.exports.feedServer = function() {
     server.get('/', function(req, res, next) {
         console.log(req.connection.remoteAddress + " " + req.params.jornal + " " + req.params.categoria);
+        res.header('Access-Control-Allow-Origin', '*');
         selectiveFeed(req.params.jornal, req.params.categoria, res);
         return next();
     });
@@ -39,8 +40,7 @@ module.exports.feedServer = function() {
     });
     server.listen(7171);
 };
-var selectiveFeed = function(jornal, categoria, res) {
-    res.header('Access-Control-Allow-Origin', '*');
+var selectiveFeed = function(jornal, categoria, res) {   
     switch (jornal) {
         case 'estadao':
             var categoriasEstadao = ['últimas', 'esportes', 'política', 'saúde', 'educação', 'economia', 'internacional'];
