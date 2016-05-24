@@ -40,7 +40,7 @@ module.exports.feedServer = function() {
     server.listen(7171);
 };
 var selectiveFeed = function(jornal, categoria, res) {
-    // switch case nome do jornal, default mensagem de erro jornal não definido
+    res.header('Access-Control-Allow-Origin', '*');
     switch (jornal) {
         case 'estadao':
             var categoriasEstadao = ['últimas', 'esportes', 'política', 'saúde', 'educação', 'economia', 'internacional'];
@@ -322,12 +322,12 @@ var selectiveFeed = function(jornal, categoria, res) {
             }
             break;
         case 'uol':
-            var categoriasUol = ['brasil', 'economia'];
-            if (!categoria || categoria == 'brasil') {
+            var categoriasUol = ['últimas', 'economia'];
+            if (!categoria || categoria == 'últimas') {
                 feed.load('http://rss.uol.com.br/feed/noticias.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
-                    rss.categoria = 'brasil';
+                    rss.categoria = 'últimas';
                     rss.categorias = categoriasUol;
                     if (err) {
                         console.log(err);
@@ -341,7 +341,7 @@ var selectiveFeed = function(jornal, categoria, res) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = categoria;
-                    rss.categorias = ['brasil', 'economia'];
+                    rss.categorias = categoriasUol;
                     if (err) {
                         console.log(err);
                     } else {
@@ -442,7 +442,7 @@ var selectiveFeed = function(jornal, categoria, res) {
             }
             break;
         default:
-            throw new Error("Especifique um jornal que o sistema aceite");
+            res.send("Especifique um jornal que o sistema aceite");
     }
 };
 var findHeadlines = function(url, word, cb) {
