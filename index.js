@@ -557,7 +557,7 @@ var selectiveFeed = function(jornal, categoria, res) {
             }
             break;
         case 'ig':
-            var categoriasIg = ['brasil', 'esportes'];
+            var categoriasIg = ['brasil', 'esportes','mundo','política','educação','tecnologia','carros'];
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://ultimosegundo.ig.com.br/brasil/rss.xml', function(err, rss) {
                     rss.id = jornal;
