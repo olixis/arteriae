@@ -2,8 +2,6 @@ var feed = require('rss-to-json');
 var request = require('request');
 var cheerio = require('cheerio');
 var restify = require('restify');
-var emitter = require('events'),
-    eventEmitter = new emitter.EventEmitter();
 var MAXRESULTS = 10;
 var IDS = ['estadao', 'g1', 'uol', 'elpais', 'exame', 'ig'];
 var server = restify.createServer();
@@ -16,17 +14,23 @@ server.use(function(req, res, next) {
 module.exports.feedServer = function() {
     server.get('/', function(req, res, next) {
         console.log(req.connection.remoteAddress + " " + req.params.jornal + " " + req.params.categoria);
-        selectiveFeed(req.params.jornal, req.params.categoria);
-        eventEmitter.once('retorno', function(retorno) {
-            res.header('Access-Control-Allow-Origin', '*');
-            res.send(retorno);
-            eventEmitter.removeListener('retorno', function() {});
-            return next();
-        });
+        selectiveFeed(req.params.jornal, req.params.categoria, res);
     });
     server.get('/ids', function(req, res, next) {
         console.log(req.connection.remoteAddress + " ids");
         res.send(IDS);
+        return next();
+    });
+    server.get('/home', function(req, res, next) {
+        console.log(req.connection.remoteAddress + " home");
+        feed.load('https://news.google.com.br/news?cf=all&hl=pt-BR&pz=1&ned=pt-BR_br&output=rss', function(err, rss) {
+            rss.ids = IDS;
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(rss);
+            }
+        });
         return next();
     });
     server.on("listening", function() {
@@ -34,11 +38,11 @@ module.exports.feedServer = function() {
     });
     server.listen(7171);
 };
-var selectiveFeed = function(jornal, categoria) {
+var selectiveFeed = function(jornal, categoria, res) {
     // switch case nome do jornal, default mensagem de erro jornal não definido
     switch (jornal) {
         case 'estadao':
-            var categoriasEstadao = ['últimas', 'esportes', 'política', 'saúde', 'educação','economia', 'internacional'];
+            var categoriasEstadao = ['últimas', 'esportes', 'política', 'saúde', 'educação', 'economia', 'internacional'];
             if (!categoria || categoria == 'últimas') {
                 feed.load('http://www.estadao.com.br/rss/ultimas.xml', function(err, rss) {
                     rss.id = jornal;
@@ -48,8 +52,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
-                        //console.log(rss);
+                        res.send(rss);
                     }
                 });
             } else if (categoria == 'esportes') {
@@ -61,8 +64,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
-                        //console.log(rss);
+                        res.send(rss);
                     }
                 });
             } else if (categoria == 'política') {
@@ -74,7 +76,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         //console.log(rss);
                     }
                 });
@@ -87,7 +89,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         //console.log(rss);
                     }
                 });
@@ -100,7 +102,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         //console.log(rss);
                     }
                 });
@@ -113,7 +115,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         //console.log(rss);
                     }
                 });
@@ -126,15 +128,14 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         //console.log(rss);
                     }
                 });
             }
             break;
         case 'g1':
-            var categoriasG1 = ['brasil', 'esportes','política','carros','ciência','emprego','economia','educação',
-            'loterias','mundo','natureza','tecnologia','turismo'];
+            var categoriasG1 = ['brasil', 'esportes', 'política', 'carros', 'ciência', 'emprego', 'economia', 'educação', 'loterias', 'mundo', 'natureza', 'tecnologia', 'turismo'];
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://g1.globo.com/dynamo/brasil/rss2.xml', function(err, rss) {
                     rss.id = jornal;
@@ -144,7 +145,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         //console.log(rss);
                     }
                 });
@@ -157,11 +158,11 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
-            }else if (categoria == 'política') {
+            } else if (categoria == 'política') {
                 feed.load('http://g1.globo.com/dynamo/politica/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -170,11 +171,11 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
-            }else if (categoria == 'carros') {
+            } else if (categoria == 'carros') {
                 feed.load('http://g1.globo.com/dynamo/carros/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -183,11 +184,11 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
-            }else if (categoria == 'ciência') {
+            } else if (categoria == 'ciência') {
                 feed.load('http://g1.globo.com/dynamo/ciencia-e-saude/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -196,11 +197,11 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
-            }else if (categoria == 'emprego') {
+            } else if (categoria == 'emprego') {
                 feed.load('http://g1.globo.com/dynamo/concursos-e-emprego/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -209,11 +210,11 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
-            }else if (categoria == 'economia') {
+            } else if (categoria == 'economia') {
                 feed.load('http://g1.globo.com/dynamo/economia/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -222,11 +223,11 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
-            }else if (categoria == 'educação') {
+            } else if (categoria == 'educação') {
                 feed.load('http://g1.globo.com/dynamo/educacao/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -235,11 +236,11 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
-            }else if (categoria == 'loterias') {
+            } else if (categoria == 'loterias') {
                 feed.load('http://g1.globo.com/dynamo/loterias/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -248,11 +249,11 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
-            }else if (categoria == 'mundo') {
+            } else if (categoria == 'mundo') {
                 feed.load('http://g1.globo.com/dynamo/mundo/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -261,11 +262,11 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
-            }else if (categoria == 'música') {
+            } else if (categoria == 'música') {
                 feed.load('http://g1.globo.com/dynamo/musica/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -274,11 +275,11 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
-            }else if (categoria == 'natureza') {
+            } else if (categoria == 'natureza') {
                 feed.load('http://g1.globo.com/dynamo/natureza/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -287,11 +288,11 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
-            }else if (categoria == 'tecnologia') {
+            } else if (categoria == 'tecnologia') {
                 feed.load('http://g1.globo.com/dynamo/tecnologia/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -300,11 +301,11 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
-            }else if (categoria == 'turismo') {
+            } else if (categoria == 'turismo') {
                 feed.load('http://g1.globo.com/dynamo/turismo-e-viagem/rss2.xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
@@ -313,7 +314,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
@@ -330,7 +331,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
@@ -343,7 +344,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         //console.log(rss);
                     }
                 });
@@ -360,7 +361,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
@@ -373,7 +374,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
@@ -390,7 +391,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
@@ -403,7 +404,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
@@ -420,7 +421,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
@@ -433,7 +434,7 @@ var selectiveFeed = function(jornal, categoria) {
                     if (err) {
                         console.log(err);
                     } else {
-                        eventEmitter.emit('retorno', rss);
+                        res.send(rss);
                         // console.log(rss);
                     }
                 });
