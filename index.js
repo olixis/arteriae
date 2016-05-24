@@ -13,20 +13,20 @@ server.use(function(req, res, next) {
 });
 module.exports.feedServer = function() {
     server.get('/', function(req, res, next) {
-        console.log(req.connection.remoteAddress + " " + req.params.jornal + " " + req.params.categoria);
+        console.log(req.connection.remoteAddress + " " + req.params.jornal + " " + req.params.categoria +" " + new Date().gethours());
         res.header('Access-Control-Allow-Origin', '*');
         selectiveFeed(req.params.jornal, req.params.categoria, res);
         return next();
     });
     server.get('/ids', function(req, res, next) {
         res.header('Access-Control-Allow-Origin', '*');
-        console.log(req.connection.remoteAddress + " ids");
+        console.log(req.connection.remoteAddress + " ids"+" " + new Date().gethours());
         res.send(IDS);
         return next();
     });
     server.get('/home', function(req, res, next) {
         res.header('Access-Control-Allow-Origin', '*');
-        console.log(req.connection.remoteAddress + " home");
+        console.log(req.connection.remoteAddress + " home"+" " + new Date().gethours());
         feed.load('https://news.google.com.br/news?cf=all&hl=pt-BR&pz=1&ned=pt-BR_br&output=rss', function(err, rss) {
             rss.ids = IDS;
             if (err) {
