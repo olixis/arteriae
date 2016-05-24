@@ -19,11 +19,13 @@ module.exports.feedServer = function() {
         return next();
     });
     server.get('/ids', function(req, res, next) {
+        res.header('Access-Control-Allow-Origin', '*');
         console.log(req.connection.remoteAddress + " ids");
         res.send(IDS);
         return next();
     });
     server.get('/home', function(req, res, next) {
+        res.header('Access-Control-Allow-Origin', '*');
         console.log(req.connection.remoteAddress + " home");
         feed.load('https://news.google.com.br/news?cf=all&hl=pt-BR&pz=1&ned=pt-BR_br&output=rss', function(err, rss) {
             rss.ids = IDS;
