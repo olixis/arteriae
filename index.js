@@ -449,7 +449,7 @@ var selectiveFeed = function(jornal, categoria, res) {
             } 
             break;
         case 'exame':
-            var categoriasExame = ['últimas', 'economia'];
+            var categoriasExame = ['últimas', 'economia','tecnologia','negócios','mercados','mundo','finanças','gestão'];
             if (!categoria || categoria == 'últimas') {
                 feed.load('http://feeds.feedburner.com/EXAME-Noticias?format=xml', function(err, rss) {
                     rss.id = jornal;
@@ -465,6 +465,84 @@ var selectiveFeed = function(jornal, categoria, res) {
                 });
             } else if (categoria == 'economia') {
                 feed.load('http://feeds.feedburner.com/Exame-Economia?format=xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasExame;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'tecnologia') {
+                feed.load('http://feeds.feedburner.com/Exame-Tecnologia?format=xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasExame;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'negócios') {
+                feed.load('http://feeds.feedburner.com/Exame-Negocios?format=xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasExame;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'mercados') {
+                feed.load('http://feeds.feedburner.com/EXAME-Mercados?format=xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasExame;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'mundo') {
+                feed.load('http://feeds.feedburner.com/ExameMundo?format=xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasExame;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'finanças') {
+                feed.load('http://feeds.feedburner.com/Exame-FinancasPessoais?format=xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasExame;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'gestão') {
+                feed.load('http://feeds.feedburner.com/Exame-Gestao?format=xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
                     rss.categoria = categoria;
