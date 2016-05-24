@@ -15,6 +15,7 @@ module.exports.feedServer = function() {
     server.get('/', function(req, res, next) {
         console.log(req.connection.remoteAddress + " " + req.params.jornal + " " + req.params.categoria);
         selectiveFeed(req.params.jornal, req.params.categoria, res);
+        return next();
     });
     server.get('/ids', function(req, res, next) {
         console.log(req.connection.remoteAddress + " ids");
