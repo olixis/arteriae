@@ -584,6 +584,71 @@ var selectiveFeed = function(jornal, categoria, res) {
                         // console.log(rss);
                     }
                 });
+            }else if (categoria == 'mundo') {
+                feed.load('http://ultimosegundo.ig.com.br/mundo/rss.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasIg;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'política') {
+                feed.load('http://ultimosegundo.ig.com.br/politica/rss.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasIg;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'educação') {
+                feed.load('http://ultimosegundo.ig.com.br/educacao/rss.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasIg;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'tecnologia') {
+                feed.load('http://tecnologia.ig.com.br/rss.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasIg;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        // console.log(rss);
+                    }
+                });
+            }else if (categoria == 'carros') {
+                feed.load('http://carros.ig.com.br/rss.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasIg;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        // console.log(rss);
+                    }
+                });
             }
             break;
         default:
