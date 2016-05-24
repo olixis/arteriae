@@ -324,7 +324,7 @@ var selectiveFeed = function(jornal, categoria, res) {
             }
             break;
         case 'uol':
-            var categoriasUol = ['últimas', 'economia'];
+            var categoriasUol = ['últimas', 'economia','carros','internacional','tecnologia','política','educação','saúde'];
             if (!categoria || categoria == 'últimas') {
                 feed.load('http://rss.uol.com.br/feed/noticias.xml', function(err, rss) {
                     rss.id = jornal;
@@ -351,10 +351,88 @@ var selectiveFeed = function(jornal, categoria, res) {
                         //console.log(rss);
                     }
                 });
+            }else if (categoria == 'carros') {
+                feed.load('http://rss.uol.com.br/feed/carros.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasUol;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        //console.log(rss);
+                    }
+                });
+            }else if (categoria == 'internacional') {
+                feed.load('http://rss.uol.com.br/feed/internacional.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasUol;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        //console.log(rss);
+                    }
+                });
+            }else if (categoria == 'tecnologia') {
+                feed.load('http://rss.uol.com.br/feed/tecnologia.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasUol;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        //console.log(rss);
+                    }
+                });
+            }else if (categoria == 'política') {
+                feed.load('http://rss.uol.com.br/feed/politica.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasUol;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        //console.log(rss);
+                    }
+                });
+            }else if (categoria == 'educação') {
+                feed.load('http://rss.uol.com.br/feed/educacao.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasUol;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        //console.log(rss);
+                    }
+                });
+            }else if (categoria == 'saúde') {
+                feed.load('http://rss.uol.com.br/feed/saude.xml', function(err, rss) {
+                    rss.id = jornal;
+                    rss.ids = IDS;
+                    rss.categoria = categoria;
+                    rss.categorias = categoriasUol;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.send(rss);
+                        //console.log(rss);
+                    }
+                });
             }
             break;
         case 'elpais':
-            var categoriasElpais = ['brasil', 'esportes'];
+            var categoriasElpais = ['brasil'];
             if (!categoria || categoria == 'brasil') {
                 feed.load('http://brasil.elpais.com/rss/brasil/portada.xml', function(err, rss) {
                     rss.id = jornal;
@@ -368,28 +446,15 @@ var selectiveFeed = function(jornal, categoria, res) {
                         // console.log(rss);
                     }
                 });
-            } else if (categoria == 'esportes') {
-                feed.load('http://brasil.elpais.com/seccion/rss/deportes/', function(err, rss) {
-                    rss.id = jornal;
-                    rss.ids = IDS;
-                    rss.categoria = categoria;
-                    rss.categorias = categoriasElpais;
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        res.send(rss);
-                        // console.log(rss);
-                    }
-                });
-            }
+            } 
             break;
         case 'exame':
-            var categoriasExame = ['brasil', 'economia'];
-            if (!categoria || categoria == 'brasil') {
+            var categoriasExame = ['últimas', 'economia'];
+            if (!categoria || categoria == 'últimas') {
                 feed.load('http://feeds.feedburner.com/EXAME-Noticias?format=xml', function(err, rss) {
                     rss.id = jornal;
                     rss.ids = IDS;
-                    rss.categoria = 'brasil';
+                    rss.categoria = 'últimas';
                     rss.categorias = categoriasExame;
                     if (err) {
                         console.log(err);

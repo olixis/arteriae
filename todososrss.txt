@@ -36,3 +36,23 @@ http://rss.uol.com.br/feed/educacao.xml
 http://rss.uol.com.br/feed/saude.xml
 
 elpais
+1 só
+
+exame
+http://feeds.feedburner.com/EXAME-Noticias?format=xml
+http://feeds.feedburner.com/Exame-Economia?format=xml
+http://feeds.feedburner.com/Exame-Tecnologia?format=xml
+http://feeds.feedburner.com/Exame-Negocios?format=xml
+http://feeds.feedburner.com/EXAME-Mercados?format=xml
+http://feeds.feedburner.com/ExameMundo?format=xml
+http://feeds.feedburner.com/Exame-FinancasPessoais?format=xml
+http://feeds.feedburner.com/Exame-Gestao?format=xml
+
+ig
+http://ultimosegundo.ig.com.br/brasil/rss.xml
+http://ultimosegundo.ig.com.br/mundo/rss.xml
+http://ultimosegundo.ig.com.br/politica/rss.xml
+http://ultimosegundo.ig.com.br/educacao/rss.xml
+http://tecnologia.ig.com.br/rss.xml
+http://carros.ig.com.br/rss.xml
+
