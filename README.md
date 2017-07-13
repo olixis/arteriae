@@ -1,3 +1,5 @@
+## DEPRECATED
+
 # arteriae
 node api for searching news and headlines
 
